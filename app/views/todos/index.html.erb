@@ -21,9 +21,11 @@
         <td><%= link_to 'Destroy', todo, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
-  </tbody>
-</table>
-
-<br>
+    </tbody>
+    </table>
+    
+    <br>
+    <%= react_component("HelloWorld", { greeting: "Hello from react-rails." }) %>
+    <br>
 
 <%= link_to 'New Todo', new_todo_path %>
