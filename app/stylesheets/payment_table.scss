@@ -20,11 +20,34 @@
     box-shadow: 0px 19px 66px -38px rgba(0, 0, 0, 0.56);
   }
   &__row-item {
+    text-align: center;
     font-weight: 700;
   }
   &__payment-method-badge {
     width: 50px;
     border: #f0f0f0 solid 1px;
     border-radius: 5px;
+  }
+  &__payment-status-badge {
+    font-weight: 500;
+    background: #000000;
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    border-radius: 25px;
+  }
+  &__payment-status-badge-text {
+    color: #ffffff;
+    font-size: 0.8rem;
+    vertical-align: middle;
+  }
+  &__payment-status-badge-re {
+    background: #63c0f7;
+  }
+  &__payment-status-badge-np {
+    background: #adbbc9;
+  }
+  &__payment-status-badge-pa {
+    background: #8bd041;
   }
 }

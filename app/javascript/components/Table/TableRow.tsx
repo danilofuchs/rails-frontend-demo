@@ -2,6 +2,7 @@ import * as React from "react";
 import { Row, Col } from "antd";
 import { IColumnConfig } from "./Table";
 import PaymentMethodBadge from "./PaymentMethodBadge";
+import PaymentStatusBadge from "./PaymentStatusBadge";
 
 interface ITableRowProps {
   columnsConfig: IColumnConfig[];
@@ -23,6 +24,8 @@ function TableRow(props: ITableRowProps) {
             {data ? (
               columnConfig.dataType === "payment_method_badge" ? (
                 <PaymentMethodBadge method={data} />
+              ) : columnConfig.dataType === "payment_status_badge" ? (
+                <PaymentStatusBadge status={data} />
               ) : (
                 data
               )

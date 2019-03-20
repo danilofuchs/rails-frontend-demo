@@ -17,7 +17,10 @@ function Table<TableField> (props: ITableProps<TableField>) {
         <props.values.forEach()>
     );
 }*/
-export type DataTypes = "text" | "payment_method_badge";
+export type DataTypes =
+  | "text"
+  | "payment_method_badge"
+  | "payment_status_badge";
 
 export interface IDataPoint {
   key: string;
