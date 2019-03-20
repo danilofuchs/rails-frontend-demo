@@ -28,6 +28,7 @@
     <%= react_component("HelloWorld", { greeting: "Hello from react-rails." }) %>
     <%= react_component("Log", { todos: @todos.to_json }) %>
     <%= react_component("HelloTypescript", { possibleStatus: ["ON", "OFF"] }) %>
+    <%= react_component("Table/Table", { columns: @columns, dataSource: @dataSource }) %>
     <br>
 
 <%= link_to 'New Todo', new_todo_path %>

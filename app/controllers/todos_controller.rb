@@ -4,6 +4,22 @@ class TodosController < ApplicationController
   # GET /todos
   # GET /todos.json
   def index
+    @columns = [
+  {title: "Número do pedido", dataIndex: "numero_pedido", bootstrapWidth: 6},
+  {title: "Grupo", dataIndex: "grupo", bootstrapWidth: 6}
+  ]
+@dataSource = [
+  {
+    key: "1",
+    numero_pedido: "11231312",
+    grupo: "CC"
+  },
+  {
+    key: "2",
+    numero_pedido: "18475398",
+    grupo: "-"
+  }
+]
     @todos = Todo.all
   end
 

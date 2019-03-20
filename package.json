@@ -12,7 +12,8 @@
     "react-dom": "^16.8.4",
     "react_ujs": "^2.4.4",
     "ts-loader": "^5.3.3",
-    "typescript": "^3.3.3333"
+    "typescript": "^3.3.3333",
+    "antd": "^3.15.1"
   },
   "devDependencies": {
     "webpack-dev-server": "^3.2.1"
