@@ -1,8 +1,11 @@
 import * as React from "react";
 import { Row, Col } from "antd";
+
 import { IColumnConfig } from "./Table";
+
 import PaymentMethodBadge from "./PaymentMethodBadge";
 import PaymentStatusBadge from "./PaymentStatusBadge";
+import FormattedCurrency from "./FormattedCurrency";
 
 interface ITableRowProps {
   columnsConfig: IColumnConfig[];
@@ -26,6 +29,8 @@ function TableRow(props: ITableRowProps) {
                 <PaymentMethodBadge method={data} />
               ) : columnConfig.dataType === "payment_status_badge" ? (
                 <PaymentStatusBadge status={data} />
+              ) : columnConfig.dataType === "currency" ? (
+                <FormattedCurrency value={data} />
               ) : (
                 data
               )

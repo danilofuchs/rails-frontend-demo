@@ -20,7 +20,8 @@ function Table<TableField> (props: ITableProps<TableField>) {
 export type DataTypes =
   | "text"
   | "payment_method_badge"
-  | "payment_status_badge";
+  | "payment_status_badge"
+  | "currency";
 
 export interface IDataPoint {
   key: string;
@@ -62,7 +63,7 @@ function checkValidColumnConfig(
   dataSource: {}[]
 ) {
   if (!dataSource) {
-    throw new Error("Invalid dataSource provided");
+    throw new Error("No dataSource provided");
   }
   const columnIndexes = columnConfig.map(
     columnConfig => columnConfig.dataIndex
@@ -70,7 +71,9 @@ function checkValidColumnConfig(
   dataSource.forEach((dataPoint, index) => {
     columnIndexes.forEach(dataIndex => {
       if (!dataPoint.hasOwnProperty(dataIndex)) {
-        throw new Error(`dataSource[${index}] has no key ${dataIndex}`);
+        throw new Error(
+          `dataSource[${index}] has no key ${dataIndex}. If that is expected, set is as null`
+        );
       }
     });
   });
