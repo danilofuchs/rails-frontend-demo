@@ -14,10 +14,17 @@
     border: #bac2cf solid 1px;
     border-radius: 5px;
     margin-bottom: 30px;
+    padding-top: 5px;
+    padding-bottom: 5px;
     text-align: center;
-    box-shadow: 0px 19px 66px -16px rgba(0, 0, 0, 0.56);
+    box-shadow: 0px 19px 66px -38px rgba(0, 0, 0, 0.56);
   }
   &__row-item {
     font-weight: 700;
+  }
+  &__payment-method-badge {
+    width: 50px;
+    border: #f0f0f0 solid 1px;
+    border-radius: 5px;
   }
 }

@@ -17,6 +17,7 @@ function Table<TableField> (props: ITableProps<TableField>) {
         <props.values.forEach()>
     );
 }*/
+export type DataTypes = "text" | "payment_method_badge";
 
 export interface IDataPoint {
   key: string;
@@ -27,6 +28,7 @@ export interface IColumnConfig {
   sorter?: () => -1 | 0 | 1;
   key?: string;
   bootstrapWidth?: number;
+  dataType?: DataTypes;
 }
 interface ITableProps<IDataPointType extends IDataPoint> {
   dataSource: IDataPointType[];
