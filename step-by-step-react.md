@@ -1,4 +1,4 @@
-\*\* Passo a passo
+**Passo a passo**
 
 - [Adicionar webpacker](https://prograils.com/posts/adding-webpacker-legacy-rails-app)
 - [Instalar react-rails (webpacker)](https://github.com/reactjs/react-rails)
@@ -9,7 +9,8 @@
     ```
 - Tem que deixar webpack-dev-server rodando `bin/webpack-dev-server`
 
-\*\* Contras
+**Contras**
 
 - Difícil debugar o chrome
 - Tem que rodar 2 comandos em paralelo
+- A única maneira de passar informações para o ruby é através de REST (API ou URL)

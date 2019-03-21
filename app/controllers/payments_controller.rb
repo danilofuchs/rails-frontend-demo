@@ -3,7 +3,10 @@ class PaymentsController < ApplicationController
   # GET /payments
   # GET /payments.json
   def index
-    @columns = [
+    @tableConfig = {
+        redirectUrlIndex: "redirect_url"
+    }
+    @columnsConfig = [
       {title: "Número do pedido", dataIndex: "order_number",dataType: "text", bootstrapWidth: 3},
       {title: "Valor", dataIndex: "transaction_amount", dataType: "currency", bootstrapWidth: 1},
       {title: "Grupo", dataIndex: "group", dataType: "text", bootstrapWidth: 2},
@@ -22,7 +25,8 @@ class PaymentsController < ApplicationController
         group: "CC",
         payment_method: "visa",
         status: "RE",
-        email: "teste1@email.com"
+        email: "teste1@email.com",
+        redirect_url: "payments/11231312"
       },
       {
         key: "2",
@@ -34,7 +38,8 @@ class PaymentsController < ApplicationController
         group: "Pagamento em dinheiro",
         payment_method: "boleto",
         status: "NP",
-        email: "teste2@email.com"
+        email: "teste2@email.com",
+        redirect_url: "payments/18475398"
       },
       {
         key: "3",
@@ -46,8 +51,14 @@ class PaymentsController < ApplicationController
         group: nil,
         payment_method: nil,
         status: "PA",
-        email: "teste3@email.com"
+        email: "teste3@email.com",
+        redirect_url: "payments/18475398"
       }
     ]
+  end
+
+  # GET /payments/1
+  def show
+    @paymentId = params[:id]
   end
 end

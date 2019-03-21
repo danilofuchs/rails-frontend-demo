@@ -24,6 +24,22 @@
     text-align: center;
     font-weight: 700;
   }
+  &__row-link {
+    color: inherit;
+    &:visited {
+      color: inherit;
+    }
+  }
+  &__row-link-disabled {
+    cursor: inherit;
+    color: inherit;
+    &:visited {
+      color: inherit;
+    }
+    &:hover {
+      color: inherit;
+    }
+  }
   &__payment-method-badge {
     width: 50px;
     border: #f0f0f0 solid 1px;

@@ -4,19 +4,6 @@ import "../../../stylesheets/payment_table.scss";
 import TableHeader from "./TableHeader";
 import TableRow from "./TableRow";
 
-/*
-type TableComponentProps<TableField> = { fields: TableField };
-
-interface ITableProps<TableField> {
-    values: TableField[];
-    TableComponent: React.ComponentType<TableComponentProps<TableField>>;
-}
-function Table<TableField> (props: ITableProps<TableField>) {
-    const {FormComponent}
-    return (
-        <props.values.forEach()>
-    );
-}*/
 export type DataTypes =
   | "text"
   | "payment_method_badge"
@@ -26,22 +13,26 @@ export type DataTypes =
 export interface IDataPoint {
   key: string;
 }
+export interface ITableConfig {
+  redirectUrlIndex?: string;
+}
 export interface IColumnConfig {
   title: string;
   dataIndex: string;
-  sorter?: () => -1 | 0 | 1;
   key?: string;
   bootstrapWidth?: number;
   dataType?: DataTypes;
 }
 interface ITableProps<IDataPointType extends IDataPoint> {
   dataSource: IDataPointType[];
-  columns: IColumnConfig[];
+  tableConfig: ITableConfig;
+  columnsConfig: IColumnConfig[];
 }
 function Table<IDataPointType extends IDataPoint>(
   props: ITableProps<IDataPointType>
 ) {
-  const { columns: columnsConfig, dataSource } = props;
+  const { dataSource, tableConfig, columnsConfig } = props;
+  checkValidTableConfig(tableConfig, dataSource);
   checkValidColumnConfig(columnsConfig, dataSource);
 
   return (
@@ -49,6 +40,7 @@ function Table<IDataPointType extends IDataPoint>(
       <TableHeader columnsConfig={columnsConfig} />
       {dataSource.map((dataPoint, index) => (
         <TableRow
+          tableConfig={tableConfig}
           columnsConfig={columnsConfig}
           rowData={dataPoint}
           key={dataPoint.key ? dataPoint.key : index}
@@ -58,6 +50,19 @@ function Table<IDataPointType extends IDataPoint>(
   );
 }
 
+function checkValidTableConfig(tableConfig: ITableConfig, dataSource: {}[]) {
+  dataSource.forEach((dataPoint, index) => {
+    const { redirectUrlIndex } = tableConfig;
+    if (redirectUrlIndex) {
+      if (!dataPoint.hasOwnProperty(redirectUrlIndex)) {
+        throw new Error(
+          `dataSource[${index}] has no key ${redirectUrlIndex}. If that is expected, set is as null`
+        );
+      }
+    }
+  });
+  return;
+}
 function checkValidColumnConfig(
   columnConfig: IColumnConfig[],
   dataSource: {}[]
@@ -77,6 +82,6 @@ function checkValidColumnConfig(
       }
     });
   });
-  return true;
+  return;
 }
 export default Table;
