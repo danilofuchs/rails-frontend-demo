@@ -1,4 +1,44 @@
 <p id="notice"><%= notice %></p>
-<h1>Payments</h1>
-<br>
-<br>
+
+<p>
+  <strong>Country:</strong>
+  <%= @payment.country %>
+</p>
+
+<p>
+  <strong>Order number:</strong>
+  <%= @payment.order_number %>
+</p>
+
+<p>
+  <strong>Currency amount:</strong>
+  <%= @payment.currency_amount %>
+</p>
+
+<p>
+  <strong>Currency symbol:</strong>
+  <%= @payment.currency_symbol %>
+</p>
+
+<p>
+  <strong>Payment group:</strong>
+  <%= @payment.payment_group %>
+</p>
+
+<p>
+  <strong>Payment method:</strong>
+  <%= @payment.payment_method %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @payment.status %>
+</p>
+
+<p>
+  <strong>Customer email:</strong>
+  <%= @payment.customer_email %>
+</p>
+
+<%= link_to 'Edit', edit_payment_path(@payment) %> |
+<%= link_to 'Back', payments_path %>

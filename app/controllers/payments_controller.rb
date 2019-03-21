@@ -1,73 +1,95 @@
 class PaymentsController < ApplicationController
+  before_action :set_payment, only: [:show, :edit, :update, :destroy]
 
-  @@isBackgroundHighlighted = false;
-
-  # GET /payments?background_highlighted=true
+  # GET /payments
   # GET /payments.json
   def index
+    @payments = Payment.all
+    @dataSource = []
+    @payments.each { |payment|
+      newPayment = payment.attributes
+      puts(payment)
+      newPayment[:transaction_amount] = {
+        amount: payment[:currency_amount],
+        currency: payment[:currency_symbol]
+      }
+      @dataSource.push(newPayment)
+    }
+
     @tableConfig = {
-        redirectUrlIndex: "redirect_url",
-        backgroundHighlightParam: "background_highlighted",
-        isBackgroundHighlighted: @@isBackgroundHighlighted || params["background_highlighted"] == "true"
     }
     @columnsConfig = [
       {title: "Número do pedido", dataIndex: "order_number",dataType: "text", bootstrapWidth: 3},
       {title: "Valor", dataIndex: "transaction_amount", dataType: "currency", bootstrapWidth: 1},
-      {title: "Grupo", dataIndex: "group", dataType: "text", bootstrapWidth: 2},
+      {title: "Grupo", dataIndex: "payment_group", dataType: "text", bootstrapWidth: 2},
       {title: "Método", dataIndex: "payment_method", dataType: "payment_method_badge", bootstrapWidth: 2},
       {title: "Status", dataIndex: "status", dataType: "payment_status_badge", bootstrapWidth: 1},
-      {title: "E-mail do cliente", dataIndex: "email", dataType: "text", bootstrapWidth: 3},
-    ]
-    @dataSource = [
-      {
-        key: "1",
-        order_number: "11231312",
-        transaction_amount: {
-            currency: "BRL",
-            amount: "203.09"
-          },
-        group: "CC",
-        payment_method: "visa",
-        status: "RE",
-        email: "teste1@email.com",
-        redirect_url: "payments/11231312"
-      },
-      {
-        key: "2",
-        order_number: "18475398",
-        transaction_amount: {
-            currency: "BRL",
-            amount: "220.12"
-        },
-        group: "Pagamento em dinheiro",
-        payment_method: "boleto",
-        status: "NP",
-        email: "teste2@email.com",
-        redirect_url: "payments/18475398"
-      },
-      {
-        key: "3",
-        order_number: "18475398",
-        transaction_amount: {
-            currency: "MEX",
-            amount: "712.87"
-          },
-        group: nil,
-        payment_method: nil,
-        status: "PA",
-        email: "teste3@email.com",
-        redirect_url: "payments/18475398"
-      }
+      {title: "E-mail do cliente", dataIndex: "customer_email", dataType: "text", bootstrapWidth: 3},
     ]
   end
 
   # GET /payments/1
+  # GET /payments/1.json
   def show
-    @paymentId = params[:id]
   end
 
-  def toggle_background
-    @@isBackgroundHighlighted = !@@isBackgroundHighlighted
-    render json: "{newState: #{@@isBackgroundHighlighted}}"
+  # GET /payments/new
+  def new
+    @payment = Payment.new
   end
+
+  # GET /payments/1/edit
+  def edit
+  end
+
+  # POST /payments
+  # POST /payments.json
+  def create
+    @payment = Payment.new(payment_params)
+
+    respond_to do |format|
+      if @payment.save
+        format.html { redirect_to @payment, notice: 'Payment was successfully created.' }
+        format.json { render :show, status: :created, location: @payment }
+      else
+        format.html { render :new }
+        format.json { render json: @payment.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # PATCH/PUT /payments/1
+  # PATCH/PUT /payments/1.json
+  def update
+    respond_to do |format|
+      if @payment.update(payment_params)
+        format.html { redirect_to @payment, notice: 'Payment was successfully updated.' }
+        format.json { render :show, status: :ok, location: @payment }
+      else
+        format.html { render :edit }
+        format.json { render json: @payment.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # DELETE /payments/1
+  # DELETE /payments/1.json
+  def destroy
+    @payment.destroy
+    respond_to do |format|
+      format.html { redirect_to payments_url, notice: 'Payment was successfully destroyed.' }
+      format.json { head :no_content }
+    end
+  end
+
+  private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_payment
+      @payment = Payment.find(params[:id])
+    end
+
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def payment_params
+      params.require(:payment).permit(:country, :order_number, :currency_amount, :currency_symbol, :payment_group, :payment_method, :status, :customer_email)
+    end
 end

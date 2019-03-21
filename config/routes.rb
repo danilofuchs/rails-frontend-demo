@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
+  resources :payments
   resources :todos
-  get '/payments', to: 'payments#index'
-  get '/payments/:id', to: 'payments#show'
   get '/refunds', to: 'refunds#index'
   get '/refunds/:id', to: 'refunds#show'
 
