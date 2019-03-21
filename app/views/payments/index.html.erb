@@ -1,9 +1,8 @@
 <p id="notice"><%= notice %></p>
-
- <div class="<%= params["background_highlighted"] == "true" ? "ruby-container-highlight-background" : "ruby-container" %>">
-
-    <h1>Payments</h1>
-    <br>
-    <%= react_component("Table/Table", { tableConfig: @tableConfig, columnsConfig: @columnsConfig, dataSource: @dataSource }) %>
-    <br>
+<div id="rails-background">
+  <h1>Payments</h1>
+  <%= puts(@tableConfig[:isBackgroundHighlighted]) %>
+  <br>
+  <%= react_component("Table/Table", { tableConfig: @tableConfig, columnsConfig: @columnsConfig, dataSource: @dataSource }) %>
+  <br>
 </div>

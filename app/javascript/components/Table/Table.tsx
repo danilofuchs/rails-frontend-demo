@@ -1,7 +1,7 @@
 import * as React from "react";
-const { useRef } = React;
+const { useRef, useState } = React;
 import classNames from "classnames";
-import axios from "axios";
+// import axios from "axios";
 import "antd/dist/antd.css";
 import "../../../stylesheets/payment_table.scss";
 import TableHeader from "./TableHeader";
@@ -19,8 +19,6 @@ export interface IDataPoint {
 }
 export interface ITableConfig {
   redirectUrlIndex?: string;
-  backgroundHighlightParam?: string;
-  isBackgroundHighlighted?: string;
 }
 export interface IColumnConfig {
   title: string;
@@ -38,79 +36,52 @@ function Table<IDataPointType extends IDataPoint>(
   props: ITableProps<IDataPointType>
 ) {
   const { dataSource, tableConfig, columnsConfig } = props;
+  const [isBackgroundHighlighted, setBackgroundHighlighted] = useState(false);
   const highlightLinkRef = useRef<HTMLAnchorElement>();
 
   checkValidTableConfig(tableConfig, dataSource);
   checkValidColumnConfig(columnsConfig, dataSource);
 
-  function handleBackgroundSwitchClick(isChecked: boolean) {
-    const currentUrl = location.href;
+  async function handleBackgroundSwitchClickAPI(isChecked: boolean) {
+    const backgroundDiv = document.getElementById("rails-background");
     if (isChecked) {
-      location.href = updateURLParameter(
-        currentUrl,
-        tableConfig.backgroundHighlightParam,
-        "true"
-      );
-      highlightLinkRef.current.click();
+      backgroundDiv.classList.add("ruby-container-highlight-background");
     } else {
-      location.href = updateURLParameter(
-        currentUrl,
-        tableConfig.backgroundHighlightParam,
-        "false"
-      );
-      highlightLinkRef.current.click();
+      backgroundDiv.classList.remove("ruby-container-highlight-background");
     }
-  }
-
-  async function handleBackgroundSwitchClickAPI() {
-    const response = await axios.get("payments-toggle-background", {});
-    console.log(response.data);
+    setBackgroundHighlighted(isChecked);
   }
 
   return (
     <div
       className={classNames(
         "react-table",
-        tableConfig.isBackgroundHighlighted === "true"
-          ? "react-table__highlight-background"
-          : ""
+        isBackgroundHighlighted ? "react-table__highlight-background" : ""
       )}
     >
       <TableHeader columnsConfig={columnsConfig} />
-      {dataSource.map((dataPoint, index) => (
-        <TableRow
-          tableConfig={tableConfig}
-          columnsConfig={columnsConfig}
-          rowData={dataPoint}
-          key={dataPoint.key ? dataPoint.key : index}
-        />
-      ))}
-
-      {tableConfig.backgroundHighlightParam &&
-        tableConfig.isBackgroundHighlighted !== undefined && (
-          <>
-            <span className="react-table__toggle-container">
-              <label className="react-table__toggle-label">
-                Mostrar wrapper React (URL)
-              </label>
-              <Switch
-                checked={tableConfig.isBackgroundHighlighted === "true"}
-                onChange={handleBackgroundSwitchClick}
-              />
-              <a ref={highlightLinkRef} />
-            </span>
-            <span className="react-table__toggle-container">
-              <label className="react-table__toggle-label">
-                Mostrar wrapper React (API)
-              </label>
-              <Switch
-                checked={tableConfig.isBackgroundHighlighted === "true"}
-                onChange={handleBackgroundSwitchClickAPI}
-              />
-              <a ref={highlightLinkRef} />
-            </span>
-          </>
-        )}
+      <div className="react-table__rows-container">
+        {dataSource.map((dataPoint, index) => (
+          <TableRow
+            tableConfig={tableConfig}
+            columnsConfig={columnsConfig}
+            rowData={dataPoint}
+            key={dataPoint.key ? dataPoint.key : index}
+          />
+        ))}
+      </div>
+      <>
+        <span className="react-table__toggle-container">
+          <label className="react-table__toggle-label">
+            Mostrar wrapper React
+          </label>
+          <Switch
+            checked={isBackgroundHighlighted}
+            onChange={handleBackgroundSwitchClickAPI}
+          />
+          <a ref={highlightLinkRef} />
+        </span>
+      </>
     </div>
   );
 }

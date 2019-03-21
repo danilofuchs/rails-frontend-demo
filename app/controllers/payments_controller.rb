@@ -1,12 +1,14 @@
 class PaymentsController < ApplicationController
 
+  @@isBackgroundHighlighted = false;
+
   # GET /payments?background_highlighted=true
   # GET /payments.json
   def index
     @tableConfig = {
         redirectUrlIndex: "redirect_url",
         backgroundHighlightParam: "background_highlighted",
-        isBackgroundHighlighted: params["background_highlighted"]
+        isBackgroundHighlighted: @@isBackgroundHighlighted || params["background_highlighted"] == "true"
     }
     @columnsConfig = [
       {title: "Número do pedido", dataIndex: "order_number",dataType: "text", bootstrapWidth: 3},
@@ -65,6 +67,7 @@ class PaymentsController < ApplicationController
   end
 
   def toggle_background
-    render json: "{newState: true}"
+    @@isBackgroundHighlighted = !@@isBackgroundHighlighted
+    render json: "{newState: #{@@isBackgroundHighlighted}}"
   end
 end

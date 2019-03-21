@@ -1,5 +1,7 @@
 <p id="notice"><%= notice %></p>
-<h1>Refunds</h1>
-<br>
-<%= react_component("Table/Table", { tableConfig: @tableConfig, columnsConfig: @columnsConfig, dataSource: @dataSource }) %>
-<br>
+<div id="rails-background">
+  <h1>Refunds</h1>
+  <br>
+  <%= react_component("Table/Table", { tableConfig: @tableConfig, columnsConfig: @columnsConfig, dataSource: @dataSource }) %>
+  <br>
+</div>
