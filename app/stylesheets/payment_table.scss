@@ -3,7 +3,12 @@
   border: #bac2cf solid 1px;
   padding-left: 20px;
   padding-right: 20px;
+  &__highlight-background {
+    background: #d0e4fa;
+  }
   &__header-container {
+    padding-top: 20px;
+    padding-bottom: 10px;
   }
   &__header-title {
     text-align: center;
@@ -66,5 +71,13 @@
   }
   &__payment-status-badge-pa {
     background: #8bd041;
+  }
+
+  &__toggle-container {
+    display: inline-flex;
+  }
+  &__toggle-label {
+    font-size: 1rem;
+    margin-right: 10px;
   }
 }

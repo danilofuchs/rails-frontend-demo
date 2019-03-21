@@ -1,8 +1,12 @@
 import * as React from "react";
+const { useRef } = React;
+import classNames from "classnames";
+import axios from "axios";
 import "antd/dist/antd.css";
 import "../../../stylesheets/payment_table.scss";
 import TableHeader from "./TableHeader";
 import TableRow from "./TableRow";
+import { Switch } from "antd";
 
 export type DataTypes =
   | "text"
@@ -15,6 +19,8 @@ export interface IDataPoint {
 }
 export interface ITableConfig {
   redirectUrlIndex?: string;
+  backgroundHighlightParam?: string;
+  isBackgroundHighlighted?: string;
 }
 export interface IColumnConfig {
   title: string;
@@ -32,11 +38,44 @@ function Table<IDataPointType extends IDataPoint>(
   props: ITableProps<IDataPointType>
 ) {
   const { dataSource, tableConfig, columnsConfig } = props;
+  const highlightLinkRef = useRef<HTMLAnchorElement>();
+
   checkValidTableConfig(tableConfig, dataSource);
   checkValidColumnConfig(columnsConfig, dataSource);
 
+  function handleBackgroundSwitchClick(isChecked: boolean) {
+    const currentUrl = location.href;
+    if (isChecked) {
+      location.href = updateURLParameter(
+        currentUrl,
+        tableConfig.backgroundHighlightParam,
+        "true"
+      );
+      highlightLinkRef.current.click();
+    } else {
+      location.href = updateURLParameter(
+        currentUrl,
+        tableConfig.backgroundHighlightParam,
+        "false"
+      );
+      highlightLinkRef.current.click();
+    }
+  }
+
+  async function handleBackgroundSwitchClickAPI() {
+    const response = await axios.get("payments-toggle-background", {});
+    console.log(response.data);
+  }
+
   return (
-    <div className="react-table">
+    <div
+      className={classNames(
+        "react-table",
+        tableConfig.isBackgroundHighlighted === "true"
+          ? "react-table__highlight-background"
+          : ""
+      )}
+    >
       <TableHeader columnsConfig={columnsConfig} />
       {dataSource.map((dataPoint, index) => (
         <TableRow
@@ -46,6 +85,32 @@ function Table<IDataPointType extends IDataPoint>(
           key={dataPoint.key ? dataPoint.key : index}
         />
       ))}
+
+      {tableConfig.backgroundHighlightParam &&
+        tableConfig.isBackgroundHighlighted !== undefined && (
+          <>
+            <span className="react-table__toggle-container">
+              <label className="react-table__toggle-label">
+                Mostrar wrapper React (URL)
+              </label>
+              <Switch
+                checked={tableConfig.isBackgroundHighlighted === "true"}
+                onChange={handleBackgroundSwitchClick}
+              />
+              <a ref={highlightLinkRef} />
+            </span>
+            <span className="react-table__toggle-container">
+              <label className="react-table__toggle-label">
+                Mostrar wrapper React (API)
+              </label>
+              <Switch
+                checked={tableConfig.isBackgroundHighlighted === "true"}
+                onChange={handleBackgroundSwitchClickAPI}
+              />
+              <a ref={highlightLinkRef} />
+            </span>
+          </>
+        )}
     </div>
   );
 }
@@ -83,5 +148,28 @@ function checkValidColumnConfig(
     });
   });
   return;
+}
+
+/**
+ * http://stackoverflow.com/a/10997390/11236
+ */
+function updateURLParameter(url: string, param: string, newParamValue: string) {
+  let newAdditionalURL = "";
+  let tempArray = url.split("?");
+  const baseURL = tempArray[0];
+  const additionalURL = tempArray[1];
+  let temp = "";
+  if (additionalURL) {
+    const tempArray = additionalURL.split("&");
+    for (let i = 0; i < tempArray.length; i++) {
+      if (tempArray[i].split("=")[0] != param) {
+        newAdditionalURL += temp + tempArray[i];
+        temp = "&";
+      }
+    }
+  }
+
+  const rows_txt = temp + "" + param + "=" + newParamValue;
+  return baseURL + "?" + newAdditionalURL + rows_txt;
 }
 export default Table;
