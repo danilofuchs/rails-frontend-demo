@@ -20,11 +20,12 @@ class RefundsController < ApplicationController
       redirectUrlIndex: "redirect_url"
     }
     @columnsConfig = [
-      {title: "Número do pedido", dataIndex: "order_number",dataType: "text", bootstrapWidth: 3},
+      {title: "País", dataIndex: "country", dataType: "country_flag", bootstrapWidth: 1},
+      {title: "Número do pedido", dataIndex: "order_number",dataType: "date", bootstrapWidth: 3},
       {title: "Código de Reembolso", dataIndex: "refund_code", dataType: "text", bootstrapWidth: 3},
       {title: "Valor", dataIndex: "transaction_amount", dataType: "currency", bootstrapWidth: 2},
       {title: "Status", dataIndex: "status", dataType: "payment_status_badge", bootstrapWidth: 1},
-      {title: "E-mail do cliente", dataIndex: "customer_email", dataType: "text", bootstrapWidth: 3},
+      {title: "E-mail do cliente", dataIndex: "customer_email", dataType: "text", bootstrapWidth: 2},
     ]
     
 
