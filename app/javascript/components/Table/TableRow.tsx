@@ -7,6 +7,7 @@ import PaymentMethodBadge from "./PaymentMethodBadge";
 import PaymentStatusBadge from "./PaymentStatusBadge";
 import FormattedCurrency from "./FormattedCurrency";
 import CountryFlagBadge from "./CountryFlagBadge";
+import FormattedDate from "./FormattedDate";
 
 interface ITableRowProps {
   tableConfig: ITableConfig;
@@ -48,6 +49,8 @@ function TableRow(props: ITableRowProps) {
                   <FormattedCurrency value={data} />
                 ) : columnConfig.dataType === "country_flag" ? (
                   <CountryFlagBadge countryCode={data} />
+                ) : columnConfig.dataType === "date" ? (
+                  <FormattedDate date={data} />
                 ) : (
                   data
                 )

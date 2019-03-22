@@ -13,7 +13,8 @@ export type DataTypes =
   | "payment_method_badge"
   | "payment_status_badge"
   | "currency"
-  | "country_flag";
+  | "country_flag"
+  | "date";
 
 export interface IDataPoint {
   key: string;
