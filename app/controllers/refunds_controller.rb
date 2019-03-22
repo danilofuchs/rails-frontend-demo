@@ -12,7 +12,7 @@ class RefundsController < ApplicationController
         amount: refund[:currency_amount],
         currency: refund[:currency_symbol]
       }
-      newRefund[:redirect_url] = "/refunds/#{refund[:refund_code]}"
+      newRefund[:redirect_url] = refund_path(refund)
       @dataSource.push(newRefund)
     }
 
@@ -88,7 +88,8 @@ class RefundsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_refund
-      @refund = Refund.find_by refund_code: params[:id]
+      #@refund = Refund.find(params[:refund_code])
+      @refund = Refund.find_by refund_code: params[:refund_code]
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

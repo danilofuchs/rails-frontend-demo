@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  resources :refunds
-  resources :payments
+  resources :refunds, param: :refund_code
+  resources :payments, param: :order_number
   resources :todos
 
   get '/payments-toggle-background', to: 'payments#toggle_background'

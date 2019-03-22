@@ -12,7 +12,7 @@ class PaymentsController < ApplicationController
         amount: payment[:currency_amount],
         currency: payment[:currency_symbol]
       }
-      newPayment[:redirect_url] = "/payments/#{payment[:order_number]}"
+      newPayment[:redirect_url] = payment_path(payment)
       @dataSource.push(newPayment)
     }
 
@@ -86,7 +86,7 @@ class PaymentsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_payment
-      @payment = Payment.find_by order_number: params[:id]
+      @payment = Payment.find_by order_number: params[:order_number]
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
