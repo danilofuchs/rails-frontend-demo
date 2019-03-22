@@ -1,5 +1,39 @@
 <p id="notice"><%= notice %></p>
-<h1>Refunds</h1>
-<br>
-<%= @refundId %>
-<br>
+
+<p>
+  <strong>Country:</strong>
+  <%= @refund.country %>
+</p>
+
+<p>
+  <strong>Order number:</strong>
+  <%= @refund.order_number %>
+</p>
+
+<p>
+  <strong>Refund code:</strong>
+  <%= @refund.refund_code %>
+</p>
+
+<p>
+  <strong>Currency amount:</strong>
+  <%= @refund.currency_amount %>
+</p>
+
+<p>
+  <strong>Currency symbol:</strong>
+  <%= @refund.currency_symbol %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @refund.status %>
+</p>
+
+<p>
+  <strong>Customer email:</strong>
+  <%= @refund.customer_email %>
+</p>
+
+<%= link_to 'Edit', edit_refund_path(@refund) %> |
+<%= link_to 'Back', refunds_path %>

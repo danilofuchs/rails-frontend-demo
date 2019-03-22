@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_21_180855) do
+ActiveRecord::Schema.define(version: 2019_03_22_121153) do
 
   create_table "payments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "country"
@@ -19,6 +19,18 @@ ActiveRecord::Schema.define(version: 2019_03_21_180855) do
     t.string "currency_symbol"
     t.string "payment_group"
     t.string "payment_method"
+    t.string "status"
+    t.string "customer_email"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "refunds", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "country"
+    t.string "order_number"
+    t.string "refund_code"
+    t.float "currency_amount"
+    t.string "currency_symbol"
     t.string "status"
     t.string "customer_email"
     t.datetime "created_at", null: false

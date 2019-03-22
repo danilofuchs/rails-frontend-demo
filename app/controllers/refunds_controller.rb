@@ -1,60 +1,98 @@
 class RefundsController < ApplicationController
+  before_action :set_refund, only: [:show, :edit, :update, :destroy]
 
   # GET /refunds
   # GET /refunds.json
   def index
+    @refunds = Refund.all
+    @dataSource = []
+    @refunds.each { |refund|
+      newRefund = refund.attributes
+      newRefund[:transaction_amount] = {
+        amount: refund[:currency_amount],
+        currency: refund[:currency_symbol]
+      }
+      newRefund[:redirect_url] = "/refunds/#{refund[:refund_code]}"
+      @dataSource.push(newRefund)
+    }
+
     @tableConfig = {
       redirectUrlIndex: "redirect_url"
     }
     @columnsConfig = [
-      {title: "Número do pedido", dataIndex: "refund_id",dataType: "text", bootstrapWidth: 3},
+      {title: "Número do pedido", dataIndex: "order_number",dataType: "text", bootstrapWidth: 3},
       {title: "Código de Reembolso", dataIndex: "refund_code", dataType: "text", bootstrapWidth: 3},
       {title: "Valor", dataIndex: "transaction_amount", dataType: "currency", bootstrapWidth: 2},
       {title: "Status", dataIndex: "status", dataType: "payment_status_badge", bootstrapWidth: 1},
-      {title: "E-mail do cliente", dataIndex: "email", dataType: "text", bootstrapWidth: 3},
+      {title: "E-mail do cliente", dataIndex: "customer_email", dataType: "text", bootstrapWidth: 3},
     ]
-    @dataSource = [
-      {
-        key: "1",
-        refund_id: "#11231312",
-        refund_code: "2kn17asbd8712ndf9",
-        transaction_amount: {
-          currency: "BRL",
-          amount: "203.09"
-        },
-        status: "RE",
-        email: "teste1@email.com",
-        redirect_url: "/refunds/2kn17asbd8712ndf9"
-      },
-      {
-        key: "2",
-        refund_id: "#18475398",
-        refund_code: "1928hcxac8ascna98",
-        transaction_amount: {
-          currency: "BRL",
-          amount: "220.12"
-        },
-        status: "NP",
-        email: "teste2@email.com",
-        redirect_url: "/refunds/1928hcxac8ascna98"
-      },
-      {
-        key: "3",
-        refund_id: "#18475398",
-        refund_code: "aisdhaisdj12983712",
-        transaction_amount: {
-          currency: "MEX",
-          amount: "780.87"
-        },
-        status: "PA",
-        email: "teste3@email.com",
-        redirect_url: "/refunds/aisdh2aisdj129837"
-      }
-    ]
+    
+
+    
   end
 
-    # GET /refunds/1
-    def show
-      @refundId = params[:id]
+  # GET /refunds/1
+  # GET /refunds/1.json
+  def show
+  end
+
+  # GET /refunds/new
+  def new
+    @refund = Refund.new
+  end
+
+  # GET /refunds/1/edit
+  def edit
+  end
+
+  # POST /refunds
+  # POST /refunds.json
+  def create
+    @refund = Refund.new(refund_params)
+
+    respond_to do |format|
+      if @refund.save
+        format.html { redirect_to @refund, notice: 'Refund was successfully created.' }
+        format.json { render :show, status: :created, location: @refund }
+      else
+        format.html { render :new }
+        format.json { render json: @refund.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # PATCH/PUT /refunds/1
+  # PATCH/PUT /refunds/1.json
+  def update
+    respond_to do |format|
+      if @refund.update(refund_params)
+        format.html { redirect_to @refund, notice: 'Refund was successfully updated.' }
+        format.json { render :show, status: :ok, location: @refund }
+      else
+        format.html { render :edit }
+        format.json { render json: @refund.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # DELETE /refunds/1
+  # DELETE /refunds/1.json
+  def destroy
+    @refund.destroy
+    respond_to do |format|
+      format.html { redirect_to refunds_url, notice: 'Refund was successfully destroyed.' }
+      format.json { head :no_content }
+    end
+  end
+
+  private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_refund
+      @refund = Refund.find_by refund_code: params[:id]
+    end
+
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def refund_params
+      params.require(:refund).permit(:country, :order_number, :refund_code, :currency_amount, :currency_symbol, :status, :customer_email)
     end
 end
