@@ -6,14 +6,27 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+# 4.times do
+#     Refund.find_or_create_by(
+#         country: ["BR", "MX"].sample,
+#         refund_code: SecureRandom.hex(10),
+#         order_number: "##{Faker::Number.number(6)}",
+#         currency_amount: Faker::Number.decimal(2).to_f,
+#         currency_symbol: ["BRL", "MXN"].sample,
+#         status: ["CA", "CO", "PE"].sample,
+#         customer_email: Faker::Internet.email
+#     )
+# end
+
 4.times do
-    Refund.find_or_create_by(
+    Payment.find_or_create_by(
         country: ["BR", "MX"].sample,
-        refund_code: SecureRandom.hex(10),
-        order_number: "##{Faker::Number.number(6)}",
+        order_number: "#{Faker::Number.number(8)}",
         currency_amount: Faker::Number.decimal(2).to_f,
         currency_symbol: ["BRL", "MXN"].sample,
-        status: ["CA", "CO", "PE"].sample,
+        payment_group: ["CC", "Pagamento em dinheiro", nil].sample,
+        payment_method: ["visa", "boleto", nil].sample,
+        status: ["RE", "NP", "PA"].sample,
         customer_email: Faker::Internet.email
     )
 end
