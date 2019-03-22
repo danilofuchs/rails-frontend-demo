@@ -39,7 +39,6 @@ function Table<IDataPointType extends IDataPoint>(
   const { dataSource, tableConfig, columnsConfig } = props;
   const [isBackgroundHighlighted, setBackgroundHighlighted] = useState(false);
   const highlightLinkRef = useRef<HTMLAnchorElement>();
-  console.log(dataSource);
 
   checkValidTableConfig(tableConfig, dataSource);
   checkValidColumnConfig(columnsConfig, dataSource);
