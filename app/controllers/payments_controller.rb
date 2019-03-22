@@ -20,10 +20,11 @@ class PaymentsController < ApplicationController
       redirectUrlIndex: "redirect_url"
     }
     @columnsConfig = [
+      {title: "País", dataIndex: "country", dataType: "country_flag", bootstrapWidth: 1},
       {title: "Número do pedido", dataIndex: "order_number",dataType: "text", bootstrapWidth: 3},
       {title: "Valor", dataIndex: "transaction_amount", dataType: "currency", bootstrapWidth: 1},
       {title: "Grupo", dataIndex: "payment_group", dataType: "text", bootstrapWidth: 2},
-      {title: "Método", dataIndex: "payment_method", dataType: "payment_method_badge", bootstrapWidth: 2},
+      {title: "Método", dataIndex: "payment_method", dataType: "payment_method_badge", bootstrapWidth: 1},
       {title: "Status", dataIndex: "status", dataType: "payment_status_badge", bootstrapWidth: 1},
       {title: "E-mail do cliente", dataIndex: "customer_email", dataType: "text", bootstrapWidth: 3},
     ]

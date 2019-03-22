@@ -12,7 +12,8 @@ export type DataTypes =
   | "text"
   | "payment_method_badge"
   | "payment_status_badge"
-  | "currency";
+  | "currency"
+  | "country_flag";
 
 export interface IDataPoint {
   key: string;

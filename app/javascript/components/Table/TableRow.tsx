@@ -6,6 +6,7 @@ import { IColumnConfig, ITableConfig } from "./Table";
 import PaymentMethodBadge from "./PaymentMethodBadge";
 import PaymentStatusBadge from "./PaymentStatusBadge";
 import FormattedCurrency from "./FormattedCurrency";
+import CountryFlagBadge from "./CountryFlagBadge";
 
 interface ITableRowProps {
   tableConfig: ITableConfig;
@@ -45,6 +46,8 @@ function TableRow(props: ITableRowProps) {
                   <PaymentStatusBadge status={data} />
                 ) : columnConfig.dataType === "currency" ? (
                   <FormattedCurrency value={data} />
+                ) : columnConfig.dataType === "country_flag" ? (
+                  <CountryFlagBadge countryCode={data} />
                 ) : (
                   data
                 )
