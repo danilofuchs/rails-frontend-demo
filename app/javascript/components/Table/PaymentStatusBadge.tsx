@@ -1,7 +1,7 @@
 import * as React from "react";
 import classNames from "classnames";
 
-type PaymentStatus = "OP" | "PE" | "CA" | "PA" | "NP" | "RE";
+type PaymentStatus = "OP" | "PE" | "CA" | "CO" | "PA" | "NP" | "RE";
 interface IBadgeConfig {
   status: PaymentStatus;
   className: string;
@@ -25,11 +25,15 @@ const badgesConfig: IBadgeConfig[] = [
   },
   {
     status: "PE",
-    className: ""
+    className: "payment-status-badge-pe"
   },
   {
     status: "CA",
-    className: ""
+    className: "payment-status-badge-ca"
+  },
+  {
+    status: "CO",
+    className: "payment-status-badge-co"
   }
 ];
 
@@ -37,7 +41,9 @@ interface IPaymentStatusBadgeProps {
   status: PaymentStatus;
 }
 function PaymentStatusBadge(props: IPaymentStatusBadgeProps) {
-  const badgeConfig = badgesConfig.find(conf => conf.status === props.status);
+  const badgeConfig = badgesConfig.find(
+    conf => conf.status.toLowerCase() === props.status.toLowerCase()
+  );
   if (badgeConfig) {
     return (
       <div
@@ -47,7 +53,7 @@ function PaymentStatusBadge(props: IPaymentStatusBadgeProps) {
         )}
       >
         <span className="react-table__payment-status-badge-text">
-          {props.status}
+          {props.status.toUpperCase()}
         </span>
       </div>
     );
