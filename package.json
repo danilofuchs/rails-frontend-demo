@@ -1,5 +1,5 @@
 {
-  "name": "rails-frontend-demo",
+  "name": "react-rails-demo",
   "private": true,
   "dependencies": {
     "@babel/preset-react": "^7.0.0",
